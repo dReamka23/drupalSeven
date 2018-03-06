@@ -1,0 +1,52 @@
+<?php
+/**
+ * Implements hook_init().
+ */
+function example_popup_init() {
+  ctools_include('modal');
+  ctools_include('ajax');
+  ctools_modal_add_js();
+}
+
+/**
+ * Implements hook_menu().
+ */
+function example_popup_menu() {
+  $items['ajax/%ctools_js/%'] = [
+    'title' => 'Reviews',
+    'page arguments' => [1, 2],
+    'access callback' => TRUE,
+    'page callback' => 'example_popup_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'example_popup.pages.inc',
+    'file path' => drupal_get_path('module', 'example_popup'),
+  ];
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function example_popup_block_info() {
+  $blocks['example'] = [
+    'info' => t('Example Block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  ];
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function example_popup_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'example':
+      $block['subject'] = t('example');
+      $block['content'] = l(t('Reviews'), 'ajax/nojs/reviews', ['attributes' => ['class' => ['ctools-use-modal']]]);
+      break;
+  }
+  return $block;
+}
+

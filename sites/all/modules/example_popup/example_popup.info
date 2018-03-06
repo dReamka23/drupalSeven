@@ -1,0 +1,4 @@
+name = example popup
+description = Custom popup
+version = 1.0
+core = 7.x

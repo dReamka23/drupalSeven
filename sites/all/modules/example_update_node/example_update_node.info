@@ -1,0 +1,4 @@
+name = example update
+description = Custom update database
+version = 1.0
+core = 7.x
